@@ -6,14 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springBootBestPractice.dto.APIResponse;
 import springBootBestPractice.dto.ProductRequestDto;
 import springBootBestPractice.dto.ProductResponseDto;
 import springBootBestPractice.service.ProductService;
+import springBootBestPractice.util.ValueMapper;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -35,4 +35,19 @@ public class ProductController {
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<APIResponse> getProducts() {
+        List<ProductResponseDto> products = productService.getProducts();
+        // Builder Design pattern (to avoid complex object creation headache)
+        APIResponse<List<ProductResponseDto>> responseDto = APIResponse
+                .<List<ProductResponseDto>>builder()
+                .status(SUCCESS)
+                .results(products)
+                .build();
+
+        log.info("productController::getProducts response {}", ValueMapper.jsonAs)
+
+    }
 }
+
