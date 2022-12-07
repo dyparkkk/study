@@ -70,7 +70,7 @@ public class DynamoSDKTest {
             System.out.println("req is " + putItemResponse.responseMetadata().requestId());
 
         } catch (ResourceNotFoundException e) {
-            System.err.println(" 존재하지 않음 ");
+            System.err.println("error 발생 ㅋ ");
         }
     }
 
