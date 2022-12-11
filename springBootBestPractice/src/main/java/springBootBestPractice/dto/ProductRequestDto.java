@@ -19,6 +19,8 @@ public class ProductRequestDto {
 
     private String description;
 
+    private String productType;
+
     @Min(value = 1, message = "quantity is not defined!")
     private int quantity;
 
@@ -26,5 +28,7 @@ public class ProductRequestDto {
     @Max(value = 500000, message = "price can't be more than 5000")
     private double price;
 
-    //...
+    private String supplierName;
+
+    private String supplierCode;
 }

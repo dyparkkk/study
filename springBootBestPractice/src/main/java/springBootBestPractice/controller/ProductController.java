@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import springBootBestPractice.dto.APIResponse;
 import springBootBestPractice.dto.ProductRequestDto;
@@ -14,6 +13,7 @@ import springBootBestPractice.service.ProductService;
 import springBootBestPractice.util.ValueMapper;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -46,8 +46,39 @@ public class ProductController {
                 .results(products)
                 .build();
 
-        log.info("productController::getProducts response {}", ValueMapper.jsonAs)
+        log.info("productController::getProducts response {}", ValueMapper.jsonAsString(responseDto));
 
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getProduct(@PathVariable long productId){
+        ProductResponseDto productResponseDto = productService.getProductById(productId);
+        APIResponse<ProductResponseDto> responseDTO = APIResponse
+                .<ProductResponseDto>builder()
+                .status(SUCCESS)
+                .results(productResponseDto)
+                .build();
+
+        log.info("ProductController::getProduct by id  {} response {}", productId,ValueMapper
+                .jsonAsString(productResponseDto));
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/types")
+    public ResponseEntity<APIResponse> getProductsGroupByType() {
+
+        Map<String, List<ProductResponseDto>> products = productService.getProductsByTypes();
+        APIResponse<Map<String, List<ProductResponseDto>>> responseDTO = APIResponse
+                .<Map<String, List<ProductResponseDto>>>builder()
+                .status(SUCCESS)
+                .results(products)
+                .build();
+
+        log.info("ProductController::getProductsGroupByType by types  {}", ValueMapper.jsonAsString(responseDTO));
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }
 
