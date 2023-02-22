@@ -21,7 +21,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.data:spring-data-jdbc")
+	implementation("org.springframework.data:spring-data-jpa")
 //	implementation("org.springframework.security:spring-security-oauth2-authorization-server:1.0.0")
 
 	compileOnly("org.projectlombok:lombok")
