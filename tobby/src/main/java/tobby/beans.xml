@@ -1,0 +1,8 @@
+<beans>
+    <bean id="connectionMaker" class="tobby.SimpleConnectionMaker" />
+    <bean id="userDaoClass" class="tobby.UserDaoClass">
+        <property name="connectionMaker" ref="connectionMaker"/>
+    </bean>
+
+    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+</beans>
